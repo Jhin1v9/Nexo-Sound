@@ -1,8 +1,11 @@
 {
   "name": "nexo-sound",
-  "version": "2.0.0",
-  "description": "NEXO SOUND — Painel desktop premium para boost de volume e equalização no Windows via Equalizer APO",
+  "version": "2.1.0",
+  "description": "NEXO SOUND — Premium desktop audio booster and equalizer for Windows and Linux",
   "main": "main.js",
+  "bin": {
+    "nexo-sound": "./bin/nexo-sound.js"
+  },
   "scripts": {
     "start": "electron .",
     "server": "node server.js",
@@ -28,6 +31,11 @@
       "target": "nsis",
       "icon": "public/icon.png"
     },
+    "linux": {
+      "target": "AppImage",
+      "icon": "public/icon.png",
+      "category": "AudioVideo"
+    },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
@@ -36,5 +44,18 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true
     }
-  }
+  },
+  "keywords": [
+    "audio",
+    "volume",
+    "booster",
+    "equalizer",
+    "windows",
+    "linux",
+    "pulseaudio",
+    "pipewire",
+    "equalizer-apo"
+  ],
+  "author": "NEXO SOUND",
+  "license": "MIT"
 }

@@ -1,7 +1,7 @@
 <div align="center">
   <img src="public/icon.png" alt="NEXO SOUND Logo" width="120" />
   <h1>NEXO SOUND</h1>
-  <p><strong>Unlock your Windows audio. Beyond 100%.</strong></p>
+  <p><strong>Unlock your audio. Beyond 100%.</strong></p>
 
   <a href="https://github.com/Jhin1v9/Nexo-Sound/releases/latest">
     <img src="https://img.shields.io/github/v/release/Jhin1v9/Nexo-Sound?color=00f0ff&style=for-the-badge" alt="Latest Release" />
@@ -12,6 +12,9 @@
   <a href="#">
     <img src="https://img.shields.io/badge/Windows-10%2F11-0078D6?style=for-the-badge&logo=windows&logoColor=white" alt="Windows" />
   </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/Linux-Ubuntu%2FDebian%2FFedora-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Linux" />
+  </a>
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/License-MIT-ff2d8d?style=for-the-badge" alt="License" />
   </a>
@@ -21,9 +24,9 @@
 
 ## ✨ What is NEXO SOUND?
 
-**NEXO SOUND** is a premium desktop audio control panel for Windows that lets you push your system volume past the native 100% limit. Built on top of the powerful **[Equalizer APO](https://sourceforge.net/projects/equalizerapo/)** engine, it delivers studio-grade volume boosting, real-time EQ, spatial audio effects, and a built-in compressor/limiter — all wrapped in a stunning glassmorphism interface.
+**NEXO SOUND** is a premium desktop audio control panel that lets you push your system volume past the native 100% limit. On Windows it leverages the powerful **[Equalizer APO](https://sourceforge.net/projects/equalizerapo/)** engine for system-wide boosting, EQ, spatial effects and compression. On Linux it integrates directly with **PulseAudio** and **PipeWire** for instant volume control.
 
-Whether you want louder movies, punchier music, clearer voices, or a competitive edge in games, NEXO SOUND gives you full control.
+Whether you want louder movies, punchier music, clearer voices, or a competitive edge in games, NEXO SOUND gives you full control through a stunning glassmorphism interface.
 
 ---
 
@@ -32,29 +35,52 @@ Whether you want louder movies, punchier music, clearer voices, or a competitive
 - **🔊 Volume Boost** — Push system volume from 0% up to **500%**
 - **🎚️ 9-Band Equalizer** — Fine-tune Bass, Mids, and Treble
 - **🎛️ Fx-Style Effects** — Clarity, Ambience, Surround, Dynamic Boost, Bass Boost
-- **🛡️ Smart Limiter** — ReaComp integration prevents clipping and distortion
+- **🛡️ Smart Limiter** — ReaComp integration prevents clipping and distortion *(Windows)*
 - **⚡ 13 One-Click Presets** — General, Movies, TV, Transcription, Music, Voice, Gaming, Bass Boost, and more
 - **🪟 Glassmorphism UI** — Modern, frosted-glass design with Lucide icons
 - **💾 Persistent State** — Your settings are saved automatically
-- **🖥️ Native Desktop App** — Built with Electron, runs as a real Windows app
+- **🖥️ Native Desktop App** — Built with Electron for Windows and Linux
+- **📦 npm Global Install** — Run `npm install -g nexo-sound` and launch with `nexo-sound`
 
 ---
 
 ## 📥 Download
 
+### Windows
+
 Get the latest installer and run it as administrator. The setup will automatically download and install **Equalizer APO** and **ReaPlugs** if they are not already present.
 
 <p align="center">
   <a href="https://github.com/Jhin1v9/Nexo-Sound/releases/download/v2.0.1/NEXO.SOUND.Setup.2.0.0.exe">
-    <img src="https://img.shields.io/badge/Download-NEXO%20SOUND%20Setup-00f0ff?style=for-the-badge&logo=windows&logoColor=white" alt="Download NEXO SOUND" />
+    <img src="https://img.shields.io/badge/Download-NEXO%20SOUND%20Setup-00f0ff?style=for-the-badge&logo=windows&logoColor=white" alt="Download NEXO SOUND for Windows" />
   </a>
 </p>
 
 > ⚠️ **Requires administrator privileges** during installation because Equalizer APO installs as an audio driver.
 
+### Linux
+
+Install directly from npm and run from anywhere:
+
+```bash
+npm install -g nexo-sound
+nexo-sound
+```
+
+Or install the latest version directly from GitHub:
+
+```bash
+npm install -g github:Jhin1v9/Nexo-Sound
+nexo-sound
+```
+
+> 💡 **Requirements:** `pactl` (PulseAudio) or `wpctl` (PipeWire) must be available in your PATH.
+
 ---
 
 ## 🛠️ Installation
+
+### Windows
 
 1. Click the **Download** button above.
 2. Run `NEXO.SOUND.Setup.2.0.0.exe`.
@@ -65,9 +91,33 @@ Get the latest installer and run it as administrator. The setup will automatical
    - NEXO SOUND app
 5. Launch NEXO SOUND from your desktop shortcut.
 
+### Linux
+
+```bash
+# Install globally via npm
+npm install -g nexo-sound
+
+# Launch the app
+nexo-sound
+```
+
+To update:
+
+```bash
+npm update -g nexo-sound
+```
+
+To uninstall:
+
+```bash
+npm uninstall -g nexo-sound
+```
+
 ---
 
 ## 📋 Requirements
+
+### Windows
 
 | Requirement | Details |
 |-------------|---------|
@@ -76,9 +126,20 @@ Get the latest installer and run it as administrator. The setup will automatical
 | Internet | Required during installation |
 | Audio | Any Windows playback device supported by Equalizer APO |
 
+### Linux
+
+| Requirement | Details |
+|-------------|---------|
+| OS | Ubuntu, Debian, Fedora, Arch or any modern distro |
+| Runtime | Node.js 18+ |
+| Audio | PulseAudio (`pactl`) or PipeWire (`wpctl`) |
+| Display | X11 or Wayland with Electron support |
+
 ---
 
 ## 🎮 How It Works
+
+### Windows
 
 NEXO SOUND modifies your system's audio pipeline through **Equalizer APO**, a system-wide audio processing driver. It applies:
 
@@ -86,6 +147,10 @@ NEXO SOUND modifies your system's audio pipeline through **Equalizer APO**, a sy
 2. **Graphic EQ** to shape frequencies.
 3. **Delay-based spatial effects** for ambience and surround width.
 4. **ReaComp compression/limiting** to control peaks and avoid distortion.
+
+### Linux
+
+NEXO SOUND talks directly to your default audio sink through **PipeWire** (`wpctl`) or **PulseAudio** (`pactl`), allowing volume values above 100% when supported by the server configuration.
 
 Everything happens in real time. No need to restart your audio apps.
 
@@ -124,7 +189,7 @@ Want to run or modify the source code?
 ```bash
 # Clone the repository
 git clone https://github.com/Jhin1v9/Nexo-Sound.git
-cd volume-boost-panel
+cd Nexo-Sound
 
 # Install dependencies
 npm install
@@ -132,7 +197,7 @@ npm install
 # Run in development mode
 npm start
 
-# Build the installer
+# Build installers
 npm run build
 ```
 
@@ -151,7 +216,7 @@ npm run build
 - [ ] Custom user presets
 - [ ] Audio visualizer
 - [ ] Per-app volume profiles
-- [ ] Auto-start with Windows
+- [ ] Auto-start with system
 - [ ] System tray minimization
 - [ ] Dark/light theme toggle
 
@@ -177,7 +242,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 🙏 Acknowledgments
 
-- [Equalizer APO](https://sourceforge.net/projects/equalizerapo/) — The engine behind system-wide audio processing
+- [Equalizer APO](https://sourceforge.net/projects/equalizerapo/) — System-wide audio processing on Windows
 - [ReaPlugs](https://www.reaper.fm/reaplugs/) — Free VST compressor/effects suite
 - [Lucide](https://lucide.dev/) — Beautiful open-source icons
 - [Electron](https://www.electronjs.org/) — Cross-platform desktop framework
