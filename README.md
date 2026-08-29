@@ -6,7 +6,7 @@ Painel desktop premium para aumentar o volume global do Windows além do limite 
 
 Clique no botão abaixo para baixar o instalador completo. Ele configura tudo automaticamente.
 
-**[⬇️ Baixar NEXO SOUND (Setup)](https://github.com/Jhin1v9/volume-boost-500/releases/download/v2.0.0/NEXO.SOUND.Setup.2.0.0.exe)**
+**[⬇️ Baixar NEXO SOUND (Setup)](https://github.com/Jhin1v9/volume-boost-500/releases/download/v2.0.1/NEXO.SOUND.Setup.2.0.0.exe)**
 
 > Execute o arquivo baixado como administrador. O instalador baixa e instala o Equalizer APO, ReaPlugs e o app desktop.
 
