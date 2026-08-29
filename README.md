@@ -51,7 +51,7 @@ Whether you want louder movies, punchier music, clearer voices, or a competitive
 Get the latest installer and run it as administrator. The setup will automatically download and install **Equalizer APO** and **ReaPlugs** if they are not already present.
 
 <p align="center">
-  <a href="https://github.com/Jhin1v9/Nexo-Sound/releases/download/v2.0.1/NEXO.SOUND.Setup.2.0.0.exe">
+  <a href="https://github.com/Jhin1v9/Nexo-Sound/releases/download/v2.1.0/NEXO.SOUND.Setup.2.1.0.exe">
     <img src="https://img.shields.io/badge/Download-NEXO%20SOUND%20Setup-00f0ff?style=for-the-badge&logo=windows&logoColor=white" alt="Download NEXO SOUND for Windows" />
   </a>
 </p>
@@ -83,7 +83,7 @@ nexo-sound
 ### Windows
 
 1. Click the **Download** button above.
-2. Run `NEXO.SOUND.Setup.2.0.0.exe`.
+2. Run `NEXO.SOUND.Setup.2.1.0.exe`.
 3. Click **Yes** on the UAC prompt.
 4. Wait while the installer sets up:
    - Equalizer APO
