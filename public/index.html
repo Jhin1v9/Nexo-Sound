@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Volume Boost 500%</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #080808;
+      color: #eee;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+    .panel {
+      background: #111;
+      border-radius: 24px;
+      padding: 32px;
+      width: 100%;
+      max-width: 720px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+      border: 1px solid #222;
+    }
+    h1 {
+      font-size: 1.8rem;
+      text-align: center;
+      margin-bottom: 4px;
+      background: linear-gradient(90deg, #00d4ff, #ff2a6d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .sub {
+      text-align: center;
+      color: #777;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
+    .big-value {
+      text-align: center;
+      margin-bottom: 18px;
+      padding: 18px;
+      background: #161616;
+      border-radius: 16px;
+      border: 1px solid #252525;
+    }
+    .big-value .num {
+      font-size: 4.5rem;
+      font-weight: 800;
+      color: #00d4ff;
+      line-height: 1;
+    }
+    .big-value .num span { font-size: 1.3rem; color: #aaa; font-weight: 500; }
+    .big-value .db { color: #888; font-size: 0.95rem; margin-top: 4px; }
+
+    .section-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #666;
+      margin: 24px 0 12px;
+      border-bottom: 1px solid #222;
+      padding-bottom: 6px;
+    }
+
+    .control {
+      margin-bottom: 16px;
+    }
+    .control-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .control-header label { font-weight: 600; color: #ccc; }
+    .control-header .val { font-weight: 700; color: #00d4ff; min-width: 50px; text-align: right; }
+    input[type=range] {
+      width: 100%;
+      height: 12px;
+      -webkit-appearance: none;
+      background: #252525;
+      border-radius: 6px;
+      outline: none;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 24px;
+      height: 24px;
+      background: #00d4ff;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 14px rgba(0,212,255,0.45);
+      margin-top: -6px;
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      height: 12px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, #00d4ff 0%, #00d4ff var(--progress, 0%), #252525 var(--progress, 0%));
+    }
+    input[type=range]::-moz-range-thumb {
+      width: 24px; height: 24px; background: #00d4ff; border-radius: 50%; cursor: pointer; border: none;
+    }
+    input[type=range]::-moz-range-track { height: 12px; border-radius: 6px; background: #252525; }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #161616;
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin: 18px 0;
+      border: 1px solid #252525;
+    }
+    .toggle-row label { font-weight: 600; }
+    .toggle-row small { display: block; color: #888; font-size: 0.8rem; margin-top: 2px; }
+    .switch { position: relative; width: 50px; height: 26px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+      background: #444; border-radius: 26px; transition: .2s;
+    }
+    .slider:before {
+      position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px;
+      background: white; border-radius: 50%; transition: .2s;
+    }
+    .switch input:checked + .slider { background: #00d4ff; }
+    .switch input:checked + .slider:before { transform: translateX(24px); }
+
+    .presets {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    button {
+      background: #1a1a1a;
+      color: #eee;
+      border: 1px solid #2a2a2a;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all .15s;
+      font-size: 0.85rem;
+    }
+    button:hover { background: #252525; border-color: #00d4ff; }
+    button.active { background: linear-gradient(135deg, #00d4ff, #0099cc); color: #000; border-color: #00d4ff; }
+    .danger { background: #ff2a6d; border-color: #ff2a6d; color: #fff; }
+    .danger:hover { background: #ff4d85; }
+    .full { width: 100%; margin-top: 10px; }
+
+    .status {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 0.85rem;
+      color: #888;
+      min-height: 20px;
+    }
+    .status.error { color: #ff6666; }
+    .status.ok { color: #4ade80; }
+    .status.warn { color: #facc15; }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <h1>Volume Boost 500%</h1>
+    <p class="sub">Equalizer APO + ReaComp — estilo FxSound, mas sem limites</p>
+
+    <div class="big-value">
+      <div class="num" id="volumeNum">100<span>%</span></div>
+      <div class="db" id="dbNum">0.00 dB</div>
+    </div>
+
+    <div class="section-title">Volume Principal</div>
+    <div class="control">
+      <div class="control-header"><label>Boost de Volume</label><span class="val" id="volumeVal">100%</span></div>
+      <input type="range" id="volume" min="0" max="500" value="100" data-key="volume">
+    </div>
+
+    <div class="section-title">Efeitos FxSound</div>
+    <div class="grid-2">
+      <div class="control">
+        <div class="control-header"><label>Clareza</label><span class="val" id="clarityVal">0</span></div>
+        <input type="range" id="clarity" min="0" max="20" value="0" data-key="clarity">
+      </div>
+      <div class="control">
+        <div class="control-header"><label>Ambiente</label><span class="val" id="ambienceVal">0</span></div>
+        <input type="range" id="ambience" min="0" max="20" value="0" data-key="ambience">
+      </div>
+      <div class="control">
+        <div class="control-header"><label>Surround</label><span class="val" id="surroundVal">0</span></div>
+        <input type="range" id="surround" min="0" max="20" value="0" data-key="surround">
+      </div>
+      <div class="control">
+        <div class="control-header"><label>Impulso Dinâmico</label><span class="val" id="dynamicVal">0</span></div>
+        <input type="range" id="dynamic" min="0" max="20" value="0" data-key="dynamic">
+      </div>
+      <div class="control">
+        <div class="control-header"><label>Reforço de Graves</label><span class="val" id="bassboostVal">0</span></div>
+        <input type="range" id="bassboost" min="0" max="20" value="0" data-key="bassboost">
+      </div>
+    </div>
+
+    <div class="section-title">Equalizador Manual</div>
+    <div class="grid-2">
+      <div class="control">
+        <div class="control-header"><label>Graves</label><span class="val" id="bassVal">0 dB</span></div>
+        <input type="range" id="bass" min="-20" max="20" value="0" data-key="bass">
+      </div>
+      <div class="control">
+        <div class="control-header"><label>Médios</label><span class="val" id="midVal">0 dB</span></div>
+        <input type="range" id="mid" min="-20" max="20" value="0" data-key="mid">
+      </div>
+      <div class="control">
+        <div class="control-header"><label>Agudos</label><span class="val" id="trebleVal">0 dB</span></div>
+        <input type="range" id="treble" min="-20" max="20" value="0" data-key="treble">
+      </div>
+    </div>
+
+    <div class="toggle-row">
+      <div>
+        <label>Limiter / Compressor (ReaComp)</label>
+        <small>Corta picos para o som não estourar em volumes altos</small>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="limiter" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="section-title">Presets</div>
+    <div class="presets" id="presetGrid">
+      <!-- presets gerados pelo JS -->
+    </div>
+
+    <button class="danger full" onclick="loadPreset('default')">Resetar tudo</button>
+
+    <div class="status" id="status">Carregando...</div>
+  </div>
+
+  <script>
+    const state = {};
+    const KEYS = ['volume','clarity','ambience','surround','dynamic','bassboost','bass','mid','treble'];
+    const PRESET_LABELS = {
+      default: 'Padrão', general: 'Geral', movies: 'Filmes', tv: 'TV',
+      transcription: 'Transcrição', music: 'Música', voice: 'Voz',
+      volumeboost: 'Volume Boost', gaming: 'Gaming', classic: 'Classic',
+      light: 'Light', bassboost: 'Bass Boost', streaming: 'Streaming'
+    };
+
+    function percentToDb(p) {
+      if (p <= 0) return -60;
+      return 20 * Math.log10(p / 100);
+    }
+
+    function updateProgress(input) {
+      const min = parseFloat(input.min), max = parseFloat(input.max), val = parseFloat(input.value);
+      const pct = ((val - min) / (max - min)) * 100;
+      input.style.setProperty('--progress', pct + '%');
+    }
+
+    function updateUI() {
+      document.getElementById('volumeNum').innerHTML = `${state.volume}<span>%</span>`;
+      document.getElementById('dbNum').textContent = `${percentToDb(state.volume).toFixed(2)} dB`;
+      document.getElementById('volumeVal').textContent = `${state.volume}%`;
+
+      KEYS.forEach(k => {
+        const el = document.getElementById(k);
+        if (el) {
+          el.value = state[k];
+          updateProgress(el);
+        }
+        const valEl = document.getElementById(k + 'Val');
+        if (valEl) {
+          const suffix = (k === 'bass' || k === 'mid' || k === 'treble') ? ' dB' : '';
+          const sign = (k === 'bass' || k === 'mid' || k === 'treble') && state[k] > 0 ? '+' : '';
+          valEl.textContent = `${sign}${state[k]}${suffix}`;
+        }
+      });
+
+      document.getElementById('limiter').checked = state.limiter;
+
+      document.querySelectorAll('#presetGrid button').forEach(b => b.classList.remove('active'));
+      const active = document.getElementById('preset-' + (state.preset || 'default'));
+      if (active) active.classList.add('active');
+    }
+
+    let timeout;
+    async function sendState() {
+      clearTimeout(timeout);
+      timeout = setTimeout(async () => {
+        const status = document.getElementById('status');
+        status.textContent = 'Aplicando...';
+        status.className = 'status';
+        try {
+          const res = await fetch('/api/audio', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(state)
+          });
+          const data = await res.json();
+          if (!data.ok) throw new Error(data.error);
+          status.textContent = `Aplicado • ${state.volume}% • Limiter ${state.limiter ? 'ON' : 'OFF'}`;
+          status.className = 'status ok';
+          if (state.volume > 300) {
+            status.textContent += ' • Cuidado: volume muito alto!';
+            status.className = 'status warn';
+          }
+        } catch (err) {
+          status.textContent = 'Erro de conexão: ' + err.message;
+          status.className = 'status error';
+        }
+      }, 80);
+    }
+
+    function bindSlider(key) {
+      const el = document.getElementById(key);
+      el.addEventListener('input', () => {
+        state[key] = parseInt(el.value, 10);
+        state.preset = 'custom';
+        updateUI();
+        sendState();
+      });
+    }
+
+    function loadPreset(name) {
+      fetch('/api/presets')
+        .then(r => r.json())
+        .then(d => {
+          if (d.ok && d.presets[name]) {
+            Object.assign(state, d.presets[name], { preset: name });
+            updateUI();
+            sendState();
+          }
+        });
+    }
+
+    function renderPresets() {
+      const grid = document.getElementById('presetGrid');
+      grid.innerHTML = '';
+      Object.keys(PRESET_LABELS).forEach(key => {
+        const btn = document.createElement('button');
+        btn.id = 'preset-' + key;
+        btn.textContent = PRESET_LABELS[key];
+        btn.onclick = () => loadPreset(key);
+        grid.appendChild(btn);
+      });
+    }
+
+    document.getElementById('limiter').addEventListener('change', (e) => {
+      state.limiter = e.target.checked;
+      state.preset = 'custom';
+      updateUI();
+      sendState();
+    });
+
+    KEYS.forEach(bindSlider);
+    renderPresets();
+
+    async function init() {
+      try {
+        const res = await fetch('/api/audio');
+        const data = await res.json();
+        if (data.ok) {
+          Object.assign(state, data);
+          updateUI();
+          document.getElementById('status').textContent = 'Pronto. Ajuste os sliders ou escolha um preset.';
+          if (!data.limiterAvailable) {
+            document.getElementById('status').textContent += ' (ReaComp não encontrado — limiter inativo)';
+            document.getElementById('status').className = 'status warn';
+          }
+        }
+      } catch (err) {
+        document.getElementById('status').textContent = 'Erro ao carregar: ' + err.message;
+        document.getElementById('status').className = 'status error';
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>

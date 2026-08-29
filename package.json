@@ -1,0 +1,40 @@
+{
+  "name": "volume-boost-panel",
+  "version": "1.0.0",
+  "description": "Painel desktop para aumentar o volume global do Windows além de 100% via Equalizer APO",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "server": "node server.js",
+    "build": "electron-builder",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "electron": "^44.0.0",
+    "electron-builder": "^26.15.3",
+    "jimp": "^1.6.1",
+    "png-to-ico": "^3.0.2"
+  },
+  "build": {
+    "appId": "com.abner.volumeboost",
+    "productName": "Volume Boost 500%",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "public/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "include": "build/installer.nsh",
+      "runAfterFinish": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}
