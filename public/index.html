@@ -98,11 +98,15 @@
     .brand-icon {
       width: 48px; height: 48px;
       border-radius: 14px;
-      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+      overflow: hidden;
       display: flex; align-items: center; justify-content: center;
       box-shadow: 0 8px 32px rgba(0, 240, 255, 0.25);
     }
-    .brand-icon i { color: #000; width: 26px; height: 26px; }
+    .brand-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
     .brand-text h1 {
       font-size: 1.7rem;
       font-weight: 800;
@@ -464,7 +468,7 @@
   <div class="app">
     <header class="header">
       <div class="brand">
-        <div class="brand-icon"><i data-lucide="audio-waveform"></i></div>
+        <div class="brand-icon"><img src="icon.png" alt="NEXO SOUND" /></div>
         <div class="brand-text">
           <h1>NEXO SOUND</h1>
           <span>Premium Audio Boost</span>
