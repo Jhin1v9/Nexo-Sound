@@ -1,17 +1,10 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
-const { spawn } = require('child_process');
 
 let mainWindow;
-let serverProcess;
 
-function startServer() {
-  serverProcess = spawn(process.execPath, [path.join(__dirname, 'server.js')], {
-    cwd: __dirname,
-    stdio: 'ignore',
-    windowsHide: true
-  });
-}
+// Inicia o servidor Express dentro do processo principal
+require('./server.js');
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -35,29 +28,19 @@ function createWindow() {
 
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
-    // mainWindow.maximize();
   });
 
   mainWindow.on('closed', () => {
     mainWindow = null;
-    if (serverProcess) {
-      serverProcess.kill();
-      serverProcess = null;
-    }
   });
 }
 
 app.whenReady().then(() => {
-  startServer();
   // aguarda servidor subir
-  setTimeout(createWindow, 1200);
+  setTimeout(createWindow, 800);
 });
 
 app.on('window-all-closed', () => {
-  if (serverProcess) {
-    serverProcess.kill();
-    serverProcess = null;
-  }
   if (process.platform !== 'darwin') app.quit();
 });
 
