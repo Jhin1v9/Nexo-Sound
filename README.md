@@ -6,7 +6,7 @@ Painel desktop para aumentar o volume global do Windows além do limite de 100%,
 
 Clique no botão abaixo para baixar o instalador completo. Ele já instala tudo automaticamente.
 
-**[⬇️ Baixar Volume Boost 500% (Setup 1.0.0)](https://github.com/Jhin1v9/volume-boost-500/releases/download/v1.0.0/Volume%20Boost%20500%25%20Setup%201.0.0.exe)**
+**[⬇️ Baixar Volume Boost 500% (Setup 1.0.0)](https://github.com/Jhin1v9/volume-boost-500/releases/download/v1.0.0/Volume.Boost.500.Setup.1.0.0.exe)**
 
 > Execute o arquivo baixado como administrador. O instalador configura sozinho o Equalizer APO, ReaPlugs e o app desktop.
 
@@ -21,7 +21,7 @@ Clique no botão abaixo para baixar o instalador completo. Ele já instala tudo 
 ## Como instalar
 
 1. Clique em **[Baixar Volume Boost 500%](#download)** acima.
-2. Execute o arquivo `Volume Boost 500% Setup 1.0.0.exe`.
+2. Execute o arquivo `Volume.Boost.500.Setup.1.0.0.exe`.
 3. Confirme o UAC (permissão de administrador).
 4. Aguarde o instalador baixar e instalar o Equalizer APO e o ReaPlugs.
 5. Pronto! O app abre automaticamente e o atalho fica na área de trabalho.
