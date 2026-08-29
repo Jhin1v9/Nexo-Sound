@@ -1,14 +1,36 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const { exec, spawn } = require('child_process');
+const os = require('os');
+
+function getDataDir() {
+  // Se estiver rodando dentro do Electron empacotado, use userData
+  if (process.type === 'browser' || process.type === 'renderer') {
+    try {
+      const { app } = require('electron');
+      return app.getPath('userData');
+    } catch {
+      // fallback
+    }
+  }
+  // Em desenvolvimento, salva na pasta do projeto
+  if (fs.existsSync(path.join(__dirname, 'package.json'))) {
+    return __dirname;
+  }
+  return os.homedir();
+}
+
+const DATA_DIR = getDataDir();
+if (!fs.existsSync(DATA_DIR)) {
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+}
 
 const app = express();
 const DEFAULT_PORT = 3333;
 
 const EAPO_DIR = 'C:\\Program Files\\EqualizerAPO';
 const CONFIG_PATH = path.join(EAPO_DIR, 'config', 'config.txt');
-const STATE_PATH = path.join(__dirname, 'state.json');
+const STATE_PATH = path.join(DATA_DIR, 'state.json');
 const REACOMP_PATH = 'C:\\Program Files\\VSTPlugins\\ReaPlugs\\reacomp-standalone.dll';
 
 app.use(express.json());
