@@ -21,7 +21,7 @@ function createWindow() {
     height: 820,
     minWidth: 700,
     minHeight: 700,
-    title: 'Volume Boost 500%',
+    title: 'NEXO SOUND',
     icon: path.join(__dirname, 'public', 'icon.png'),
     webPreferences: {
       nodeIntegration: false,

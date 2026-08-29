@@ -28,7 +28,7 @@ function Wait-ForFile($path, $timeoutSec = 60) {
     return Test-Path $path
 }
 
-Write-Title "Volume Boost 500% - Setup Wizard"
+Write-Title "NEXO SOUND - Setup Wizard"
 Write-Host "Diretorio de instalacao: $BaseDir" -ForegroundColor Gray
 
 # 1. Node.js
@@ -97,15 +97,15 @@ if ($LASTEXITCODE -ne 0) {
 # 6. Atalho na area de trabalho
 Write-Host "Criando atalho na area de trabalho..." -ForegroundColor Yellow
 $WshShell = New-Object -ComObject WScript.Shell
-$Shortcut = $WshShell.CreateShortcut("$env:USERPROFILE\Desktop\Volume Boost 500.lnk")
+$Shortcut = $WshShell.CreateShortcut("$env:USERPROFILE\Desktop\NEXO SOUND.lnk")
 $Shortcut.TargetPath = "$BaseDir\start-app.bat"
 $Shortcut.WorkingDirectory = $BaseDir
-$Shortcut.Description = "Volume Boost 500%"
+$Shortcut.Description = "NEXO SOUND"
 $Shortcut.Save()
 
 Write-Host "`nSetup concluido com sucesso!" -ForegroundColor Green
 
 if (-not $NoLaunch) {
-    Write-Host "Iniciando Volume Boost 500%..." -ForegroundColor Cyan
+    Write-Host "Iniciando NEXO SOUND..." -ForegroundColor Cyan
     Start-Process "$BaseDir\start-app.bat"
 }

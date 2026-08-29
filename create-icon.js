@@ -3,65 +3,63 @@ const path = require('path');
 
 const size = 256;
 
+function lerp(a, b, t) {
+  return a + (b - a) * t;
+}
+
 async function createIcon() {
   const image = new Jimp({ width: size, height: size, color: 0x00000000 });
 
-  // Fundo circular gradiente
+  // Fundo arredondado com gradiente profundo
+  const corner = 48;
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
-      const cx = x - size / 2;
-      const cy = y - size / 2;
-      const dist = Math.sqrt(cx * cx + cy * cy);
-      if (dist < size / 2 - 4) {
-        const t = (dist / (size / 2)) * 255;
-        const r = Math.max(0, Math.min(255, 0));
-        const g = Math.max(0, Math.min(255, Math.round(212 - t * 0.3)));
-        const b = Math.max(0, Math.min(255, 255));
-        image.setPixelColor(rgbaToInt(r, g, b, 255), x, y);
-      }
+      // cantos arredondados
+      const dx = Math.max(corner - x, x - (size - corner), 0);
+      const dy = Math.max(corner - y, y - (size - corner), 0);
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist > corner) continue;
+
+      const t = y / size;
+      // gradiente roxo -> azul neon
+      const r = Math.round(lerp(60, 0, t));
+      const g = Math.round(lerp(20, 180, t));
+      const b = Math.round(lerp(80, 255, t));
+      image.setPixelColor(rgbaToInt(r, g, b, 255), x, y);
     }
   }
 
-  // Simbolo de alto-falante
-  const speakerColor = rgbaToInt(255, 255, 255, 255);
-  const centerX = size / 2 - 10;
-  const centerY = size / 2;
+  const white = rgbaToInt(255, 255, 255, 255);
+  const cyan = rgbaToInt(0, 240, 255, 255);
+  const pink = rgbaToInt(255, 45, 141, 255);
 
-  // cone do alto-falante (triangulo)
-  for (let y = 0; y < size; y++) {
-    for (let x = 0; x < size; x++) {
-      const dx = x - centerX;
-      const dy = y - centerY;
-      // corpo triangular
-      if (x >= centerX - 50 && x <= centerX + 20) {
-        const widthAtY = 30 + Math.abs(dy) * 0.5;
-        if (Math.abs(dy) < widthAtY && Math.abs(dx) < 50 - Math.abs(dy) * 0.4) {
-          image.setPixelColor(speakerColor, x, y);
-        }
+  // Desenha ondas sonoras estilizadas
+  const bars = [
+    { x: 70, h: 45, w: 14, color: white },
+    { x: 96, h: 80, w: 16, color: cyan },
+    { x: 124, h: 110, w: 20, color: pink },
+    { x: 156, h: 75, w: 16, color: cyan },
+    { x: 184, h: 50, w: 14, color: white }
+  ];
+
+  bars.forEach(bar => {
+    const top = (size - bar.h) / 2;
+    for (let y = Math.floor(top); y < Math.floor(top + bar.h); y++) {
+      for (let x = bar.x; x < bar.x + bar.w; x++) {
+        // cantos arredondados nas barras
+        const relY = y - top;
+        const radius = bar.w / 2;
+        const inTopRound = relY < radius && Math.abs((x - bar.x) + 0.5 - bar.w / 2) > Math.sqrt(radius * radius - (radius - relY) ** 2);
+        const inBottomRound = relY > bar.h - radius && Math.abs((x - bar.x) + 0.5 - bar.w / 2) > Math.sqrt(radius * radius - (relY - (bar.h - radius)) ** 2);
+        if (inTopRound || inBottomRound) continue;
+        image.setPixelColor(bar.color, x, y);
       }
     }
-  }
-
-  // ondas sonoras
-  for (let i = 0; i < 3; i++) {
-    const radius = 35 + i * 18;
-    for (let angle = -60; angle <= 60; angle += 2) {
-      const rad = (angle * Math.PI) / 180;
-      const x = Math.round(centerX + 30 + Math.cos(rad) * radius);
-      const y = Math.round(centerY + Math.sin(rad) * radius);
-      for (let ox = -3; ox <= 3; ox++) {
-        for (let oy = -3; oy <= 3; oy++) {
-          if (x + ox >= 0 && x + ox < size && y + oy >= 0 && y + oy < size) {
-            image.setPixelColor(speakerColor, x + ox, y + oy);
-          }
-        }
-      }
-    }
-  }
+  });
 
   const pngPath = path.join(__dirname, 'public', 'icon.png');
   await image.write(pngPath);
-  console.log('Icone criado:', pngPath);
+  console.log('Icone NEXO SOUND criado:', pngPath);
 }
 
 createIcon().catch(console.error);

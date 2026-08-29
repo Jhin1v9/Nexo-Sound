@@ -1,6 +1,6 @@
 @echo off
 echo ========================================
-echo   Volume Boost 500%% - Setup Wizard
+echo   NEXO SOUND - Setup Wizard
 echo ========================================
 echo.
 echo Solicitando permissao de administrador...

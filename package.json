@@ -1,7 +1,7 @@
 {
-  "name": "volume-boost-panel",
-  "version": "1.0.0",
-  "description": "Painel desktop para aumentar o volume global do Windows além de 100% via Equalizer APO",
+  "name": "nexo-sound",
+  "version": "2.0.0",
+  "description": "NEXO SOUND — Painel desktop premium para boost de volume e equalização no Windows via Equalizer APO",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -19,8 +19,8 @@
     "png-to-ico": "^3.0.2"
   },
   "build": {
-    "appId": "com.abner.volumeboost",
-    "productName": "Volume Boost 500%",
+    "appId": "com.nexosound.app",
+    "productName": "NEXO SOUND",
     "directories": {
       "output": "dist"
     },
