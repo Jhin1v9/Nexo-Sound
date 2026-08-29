@@ -4,14 +4,18 @@ const path = require('path');
 const os = require('os');
 
 function getDataDir() {
-  if (process.type === 'browser' || process.type === 'renderer') {
+  // Se estiver rodando dentro do Electron (empacotado ou nao), use userData
+  if (process.versions && process.versions.electron) {
     try {
       const { app } = require('electron');
-      return app.getPath('userData');
+      if (app && app.getPath) {
+        return app.getPath('userData');
+      }
     } catch {
       // fallback
     }
   }
+  // Em desenvolvimento, salva na pasta do projeto
   if (fs.existsSync(path.join(__dirname, 'package.json'))) {
     return __dirname;
   }
