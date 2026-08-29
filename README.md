@@ -3,11 +3,11 @@
   <h1>NEXO SOUND</h1>
   <p><strong>Unlock your Windows audio. Beyond 100%.</strong></p>
 
-  <a href="https://github.com/Jhin1v9/volume-boost-500/releases/latest">
-    <img src="https://img.shields.io/github/v/release/Jhin1v9/volume-boost-500?color=00f0ff&style=for-the-badge" alt="Latest Release" />
+  <a href="https://github.com/Jhin1v9/Nexo-Sound/releases/latest">
+    <img src="https://img.shields.io/github/v/release/Jhin1v9/Nexo-Sound?color=00f0ff&style=for-the-badge" alt="Latest Release" />
   </a>
-  <a href="https://github.com/Jhin1v9/volume-boost-500/releases">
-    <img src="https://img.shields.io/github/downloads/Jhin1v9/volume-boost-500/total?color=a855f7&style=for-the-badge" alt="Downloads" />
+  <a href="https://github.com/Jhin1v9/Nexo-Sound/releases">
+    <img src="https://img.shields.io/github/downloads/Jhin1v9/Nexo-Sound/total?color=a855f7&style=for-the-badge" alt="Downloads" />
   </a>
   <a href="#">
     <img src="https://img.shields.io/badge/Windows-10%2F11-0078D6?style=for-the-badge&logo=windows&logoColor=white" alt="Windows" />
@@ -45,7 +45,7 @@ Whether you want louder movies, punchier music, clearer voices, or a competitive
 Get the latest installer and run it as administrator. The setup will automatically download and install **Equalizer APO** and **ReaPlugs** if they are not already present.
 
 <p align="center">
-  <a href="https://github.com/Jhin1v9/volume-boost-500/releases/download/v2.0.1/NEXO.SOUND.Setup.2.0.0.exe">
+  <a href="https://github.com/Jhin1v9/Nexo-Sound/releases/download/v2.0.1/NEXO.SOUND.Setup.2.0.0.exe">
     <img src="https://img.shields.io/badge/Download-NEXO%20SOUND%20Setup-00f0ff?style=for-the-badge&logo=windows&logoColor=white" alt="Download NEXO SOUND" />
   </a>
 </p>
@@ -123,7 +123,7 @@ Want to run or modify the source code?
 
 ```bash
 # Clone the repository
-git clone https://github.com/Jhin1v9/volume-boost-500.git
+git clone https://github.com/Jhin1v9/Nexo-Sound.git
 cd volume-boost-panel
 
 # Install dependencies
