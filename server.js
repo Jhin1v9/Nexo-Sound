@@ -4,7 +4,7 @@ const path = require('path');
 const { exec, spawn } = require('child_process');
 
 const app = express();
-const PORT = 3333;
+const DEFAULT_PORT = 3333;
 
 const EAPO_DIR = 'C:\\Program Files\\EqualizerAPO';
 const CONFIG_PATH = path.join(EAPO_DIR, 'config', 'config.txt');
@@ -208,6 +208,39 @@ app.post('/api/volume', (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Painel de volume rodando em http://localhost:${PORT}`);
-});
+function tryListen(port) {
+  return new Promise((resolve, reject) => {
+    const server = app.listen(port, () => {
+      console.log(`Painel de volume rodando em http://localhost:${port}`);
+      resolve({ server, port });
+    });
+    server.on('error', (err) => {
+      if (err.code === 'EADDRINUSE') {
+        resolve(null);
+      } else {
+        reject(err);
+      }
+    });
+  });
+}
+
+async function startServer() {
+  for (let port = DEFAULT_PORT; port < DEFAULT_PORT + 20; port++) {
+    const result = await tryListen(port);
+    if (result) {
+      global.VOLUME_BOOST_PORT = result.port;
+      return result.port;
+    }
+  }
+  throw new Error('Nao foi possivel encontrar uma porta livre entre 3333 e 3352');
+}
+
+if (require.main === module) {
+  startServer().catch(err => {
+    console.error(err);
+    process.exit(1);
+  });
+}
+
+module.exports = { startServer, app };
+

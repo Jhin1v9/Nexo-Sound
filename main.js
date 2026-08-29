@@ -2,9 +2,18 @@ const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
 let mainWindow;
+let serverPort = 3333;
 
-// Inicia o servidor Express dentro do processo principal
-require('./server.js');
+const { startServer } = require('./server.js');
+
+async function init() {
+  try {
+    serverPort = await startServer();
+  } catch (err) {
+    console.error('Falha ao iniciar servidor:', err);
+  }
+  createWindow();
+}
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -24,7 +33,7 @@ function createWindow() {
   });
 
   mainWindow.setMenuBarVisibility(false);
-  mainWindow.loadURL('http://localhost:3333');
+  mainWindow.loadURL(`http://localhost:${serverPort}`);
 
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
@@ -35,10 +44,7 @@ function createWindow() {
   });
 }
 
-app.whenReady().then(() => {
-  // aguarda servidor subir
-  setTimeout(createWindow, 800);
-});
+app.whenReady().then(init);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
