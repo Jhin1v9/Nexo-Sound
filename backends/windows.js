@@ -80,7 +80,22 @@ function buildConfig(state) {
   ].join('\n') + '\n';
 }
 
+function ensureConfigDir() {
+  const configDir = path.dirname(CONFIG_PATH);
+  if (!fs.existsSync(configDir)) {
+    fs.mkdirSync(configDir, { recursive: true });
+  }
+}
+
 async function apply(state) {
+  if (!fs.existsSync(EAPO_DIR)) {
+    throw new Error(
+      'Equalizer APO nao esta instalado. ' +
+      'Baixe e instale manualmente em https://sourceforge.net/projects/equalizerapo/ ' +
+      'ou reinstale o NEXO SOUND como administrador.'
+    );
+  }
+  ensureConfigDir();
   fs.writeFileSync(CONFIG_PATH, buildConfig(state), 'utf8');
   return { platform: 'windows', method: 'EqualizerAPO' };
 }
@@ -93,4 +108,8 @@ function getInfo() {
   };
 }
 
-module.exports = { apply, getInfo, percentToDb };
+function isAvailable() {
+  return fs.existsSync(EAPO_DIR);
+}
+
+module.exports = { apply, getInfo, isAvailable, percentToDb };

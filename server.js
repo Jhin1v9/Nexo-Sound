@@ -123,6 +123,7 @@ app.get('/api/audio', (req, res) => {
       ok: true,
       ...state,
       presets: Object.keys(PRESETS),
+      eapoAvailable: backendInfo.available || false,
       limiterAvailable: backendInfo.limiterAvailable || false,
       platform: process.platform,
       backend: backendInfo.method || (IS_WINDOWS ? 'EqualizerAPO' : 'PulseAudio/PipeWire')
@@ -130,6 +131,18 @@ app.get('/api/audio', (req, res) => {
   } catch (err) {
     res.status(500).json({ ok: false, error: err.message });
   }
+});
+
+app.get('/api/info', (req, res) => {
+  res.json({
+    ok: true,
+    platform: process.platform,
+    backend: IS_WINDOWS ? 'EqualizerAPO' : 'PulseAudio/PipeWire',
+    eapoAvailable: backendInfo.available || false,
+    eapoPath: backendInfo.configPath || null,
+    limiterAvailable: backendInfo.limiterAvailable || false,
+    configPath: backendInfo.configPath || null
+  });
 });
 
 app.post('/api/audio', async (req, res) => {
